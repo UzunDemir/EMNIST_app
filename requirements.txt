@@ -1,0 +1,16 @@
+streamlit
+tensorflow
+matplotlib
+numpy
+pandas
+Pillow
+urllib3
+keras
+scikit-learn
+streamlit
+tensorflow
+pillow
+numpy
+opencv-python-headless
+matplotlib
+streamlit_drawable_canvas
