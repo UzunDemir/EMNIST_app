@@ -93,7 +93,7 @@ def load_model_safe(model_path):
         return None
 
 # Попытка загрузки модели
-model = load_model_safe('mnist_cnn_model.h5')
+model = load_model_safe('model.h5')
 
 if model is not None:
     print("Model loaded successfully.")
