@@ -14,3 +14,4 @@ numpy
 opencv-python-headless
 matplotlib
 streamlit_drawable_canvas
+transformers
