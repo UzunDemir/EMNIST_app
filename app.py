@@ -32,29 +32,29 @@ canvas_result = st_canvas(
 )
 
 # Функция для предобработки изображения
-def preprocess_image(image_data):
-    img = Image.fromarray(image_data.astype('uint8'), 'RGBA').convert('L')
-    img = img.resize((384, 384), Image.BILINEAR)  # Изменение размера
-    img_array = np.array(img)
-    return img_array
+# def preprocess_image(image_data):
+#     img = Image.fromarray(image_data.astype('uint8'), 'RGBA').convert('L')
+#     img = img.resize((384, 384), Image.BILINEAR)  # Изменение размера
+#     img_array = np.array(img)
+#     return img_array
 
-# Проверка, если кнопка нажата
-if st.button('Распознать текст'):
-    # Предобработка изображения с канвы
-    if canvas_result.image_data is not None:
-        img_array = preprocess_image(canvas_result.image_data)
+# # Проверка, если кнопка нажата
+# if st.button('Распознать текст'):
+#     # Предобработка изображения с канвы
+#     if canvas_result.image_data is not None:
+#         img_array = preprocess_image(canvas_result.image_data)
 
-        # Сохранение изображения
-        img = Image.fromarray(img_array)
-        img.save('handwritten_text.png')
+#         # Сохранение изображения
+#         img = Image.fromarray(img_array)
+#         img.save('handwritten_text.png')
 
-        # Использование модели для распознавания текста
-        pixel_values = processor(images=img, return_tensors="pt").pixel_values
-        generated_ids = model.generate(pixel_values)
-        generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+#         # Использование модели для распознавания текста
+#         pixel_values = processor(images=img, return_tensors="pt").pixel_values
+#         generated_ids = model.generate(pixel_values)
+#         generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
-        # Вывод распознанного текста
-        st.write("Распознанный текст:")
-        st.write(generated_text)
-    else:
-        st.write("Пожалуйста, нарисуйте текст перед распознаванием.")
+#         # Вывод распознанного текста
+#         st.write("Распознанный текст:")
+#         st.write(generated_text)
+#     else:
+#         st.write("Пожалуйста, нарисуйте текст перед распознаванием.")
