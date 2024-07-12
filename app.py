@@ -2,6 +2,9 @@
 # !pip install transformers
 # !pip install torch
 # !pip install streamlit opencv-python-headless
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+import tensorflow as tf
 
 # Импорт библиотек
 import streamlit as st
