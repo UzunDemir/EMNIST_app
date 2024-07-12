@@ -1,7 +1,7 @@
 # Установка необходимых библиотек
-!pip install transformers
-!pip install torch
-!pip install streamlit opencv-python-headless
+# !pip install transformers
+# !pip install torch
+# !pip install streamlit opencv-python-headless
 
 # Импорт библиотек
 import streamlit as st
