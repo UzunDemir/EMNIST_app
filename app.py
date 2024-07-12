@@ -1,12 +1,19 @@
 # Установка необходимых библиотек
+!pip install transformers
+!pip install torch
 !pip install streamlit opencv-python-headless
 
 # Импорт библиотек
 import streamlit as st
-import cv2
 import numpy as np
 from PIL import Image
-from shiftlab_ocr.doc2text.reader import Reader
+from streamlit_drawable_canvas import st_canvas
+import cv2
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
+
+# Загрузка модели и процессора TrOCR
+processor = TrOCRProcessor.from_pretrained('microsoft/trocr-base-handwritten')
+model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
 
 # Создание интерфейса Streamlit
 st.title("Распознавание рукописного текста")
@@ -26,9 +33,8 @@ canvas_result = st_canvas(
 
 # Функция для предобработки изображения
 def preprocess_image(image_data):
-    img = Image.fromarray(image_data)
-    img = img.convert('L')  # Преобразование в оттенки серого
-    img = img.resize((28, 28), Image.BILINEAR)  # Изменение размера
+    img = Image.fromarray(image_data.astype('uint8'), 'RGBA').convert('L')
+    img = img.resize((384, 384), Image.BILINEAR)  # Изменение размера
     img_array = np.array(img)
     return img_array
 
@@ -39,14 +45,16 @@ if st.button('Распознать текст'):
         img_array = preprocess_image(canvas_result.image_data)
 
         # Сохранение изображения
-        cv2.imwrite('handwritten_text.png', img_array)
+        img = Image.fromarray(img_array)
+        img.save('handwritten_text.png')
 
         # Использование модели для распознавания текста
-        reader = Reader()
-        result = reader.doc2text('handwritten_text.png')
+        pixel_values = processor(images=img, return_tensors="pt").pixel_values
+        generated_ids = model.generate(pixel_values)
+        generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
         # Вывод распознанного текста
         st.write("Распознанный текст:")
-        st.write(result[0])
+        st.write(generated_text)
     else:
         st.write("Пожалуйста, нарисуйте текст перед распознаванием.")
