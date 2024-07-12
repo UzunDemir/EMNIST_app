@@ -1,18 +1,8 @@
 streamlit
-tensorflow
-matplotlib
-numpy
-pandas
-Pillow
-urllib3
-keras
-scikit-learn
-streamlit
-tensorflow
-pillow
-numpy
 opencv-python-headless
-matplotlib
-streamlit_drawable_canvas
 transformers
-torch
+torch+cpu
+torchvision+cpu
+torchaudio+cpu
+-f https://download.pytorch.org/whl/cpu
+
